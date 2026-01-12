@@ -9,3 +9,9 @@
 - 通过打开命令面板输入`scriptcat.autoTarget`可切换回自动识别模式
 
 > 如果使用webpack等打包工具打包请不要忘记在文件头部保留脚本的命名空间
+
+## 发布
+
+```
+vsce publish
+```
