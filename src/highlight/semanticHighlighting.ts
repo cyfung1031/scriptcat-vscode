@@ -23,18 +23,18 @@ export async function checkAndPromptSemanticHighlighting(): Promise<void> {
 
   // 提示用户启用语义高亮
   const action = await vscode.window.showInformationMessage(
-    "ScriptCat 建议启用语义高亮以获得更好的 UserScript 元数据高亮体验",
-    "立即启用",
-    "不再提示"
+    vscode.l10n.t("scriptcat-semantic-highlight-prompt"),
+    vscode.l10n.t("scriptcat-semantic-highlight-enable"),
+    vscode.l10n.t("scriptcat-semantic-highlight-skip")
   );
 
-  if (action === "立即启用") {
+  if (action === vscode.l10n.t("scriptcat-semantic-highlight-enable")) {
     await config.update(SEMANTIC_HIGHLIGHTING_CONFIG_KEY, true, true);
-    vscode.window.showInformationMessage("语义高亮已启用！");
-  } else if (action === "不再提示") {
+    vscode.window.showInformationMessage(vscode.l10n.t("scriptcat-semantic-highlight-enabled"));
+  } else if (action === vscode.l10n.t("scriptcat-semantic-highlight-skip")) {
     await config.update(PROMPT_CONFIG_KEY, false, true);
     vscode.window.showInformationMessage(
-      "您可以随时在设置中搜索 Semantic Highlighting 为 true 来开启语义高亮功能。"
+      vscode.l10n.t("scriptcat-semantic-highlight-info")
     );
   }
 }

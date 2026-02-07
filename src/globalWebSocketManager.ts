@@ -100,7 +100,7 @@ class GlobalWebSocketManager {
     if (existingPort) {
       console.log(`检测到已存在的WebSocket服务器，端口: ${existingPort}`);
       vscode.window.showInformationMessage(
-        `ScriptCat WebSocket服务已在其他窗口启动，端口: ${existingPort} (从窗口)`
+        vscode.l10n.t("scriptcat-ws-existing", existingPort.toString())
       );
       return existingPort;
     }
@@ -120,12 +120,12 @@ class GlobalWebSocketManager {
         this.wss.on("connection", (ws, req) => {
           ws.send('{"action":"hello"}');
           vscode.window.showInformationMessage(
-            `${req.socket.remoteAddress}已连接 (端口: ${this.port})`
+            vscode.l10n.t("scriptcat-ws-client-connected", req.socket.remoteAddress || "Unknown", this.port.toString())
           );
           
           ws.on("close", () => {
             vscode.window.showInformationMessage(
-              req.socket.remoteAddress + "已断开"
+              vscode.l10n.t("scriptcat-ws-client-disconnected", req.socket.remoteAddress || "Unknown")
             );
           });
         });
@@ -133,7 +133,7 @@ class GlobalWebSocketManager {
         this.wss.on("error", (error) => {
           console.error('WebSocket服务器错误:', error);
           vscode.window.showWarningMessage(
-            "ScriptCat start failed:" + error.message
+            vscode.l10n.t("scriptcat-ws-start-failed", error.message)
           );
           reject(error);
         });
@@ -152,7 +152,7 @@ class GlobalWebSocketManager {
           this.setupFileWatcher();
           
           vscode.window.showInformationMessage(
-            `ScriptCat WebSocket服务已启动，端口: ${this.port} (主窗口)`
+            vscode.l10n.t("scriptcat-ws-started-owner", this.port.toString())
           );
           console.log(`WebSocket服务器已启动，端口: ${this.port}`);
           resolve(this.port);
