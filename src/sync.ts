@@ -44,11 +44,11 @@ export class Synchronizer {
       
       if (this.isWebSocketOwner) {
         vscode.window.showInformationMessage(
-          `ScriptCat WebSocket服务已启动，端口: ${port} (主窗口)`
+          vscode.l10n.t("ScriptCat WebSocket service started on port {0} (Main Window)", port.toString())
         );
       } else {
         vscode.window.showInformationMessage(
-          `ScriptCat WebSocket服务已在其他窗口运行，当前窗口将使用文件通信模式 (从窗口)`
+          vscode.l10n.t("ScriptCat WebSocket service is running in another window, current window will use file communication mode (Secondary Window)")
         );
       }
       
@@ -58,11 +58,11 @@ export class Synchronizer {
         // 端口被占用，说明其他窗口已经启动了WebSocket服务器
         this.isWebSocketOwner = false;
         vscode.window.showInformationMessage(
-          `ScriptCat WebSocket服务已在其他窗口运行，当前窗口将使用文件通信模式 (从窗口)`
+          vscode.l10n.t("ScriptCat WebSocket service is running in another window, current window will use file communication mode (Secondary Window)")
         );
       } else {
         vscode.window.showErrorMessage(
-          `无法启动WebSocket服务: ${error.message}`
+          vscode.l10n.t("File communication failed: {0}", error.message)
         );
       }
     }
@@ -115,7 +115,7 @@ export class Synchronizer {
       }, 5000);
     } catch (error) {
       console.warn('无法通过文件发送消息:', error);
-      vscode.window.showWarningMessage(`文件通信失败: ${error}`);
+      vscode.window.showWarningMessage(vscode.l10n.t("File communication failed: {0}", String(error)));
     }
   }
 
@@ -127,9 +127,12 @@ export class Synchronizer {
         return;
       }
       vscode.window
-        .showInformationMessage(ev.path + "更改已同步", "不再提示该文件")
+        .showInformationMessage(
+          vscode.l10n.t("{0} changes have been synced", ev.path),
+          vscode.l10n.t("Don't show again for this file")
+        )
         .then((result) => {
-          if (result === "不再提示该文件") {
+          if (result === vscode.l10n.t("Don't show again for this file")) {
             this.context.workspaceState.update("ignore_msg_" + ev.path, true);
           }
         });

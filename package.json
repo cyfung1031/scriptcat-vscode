@@ -1,7 +1,7 @@
 {
   "name": "scriptcat-vscode",
-  "displayName": "scriptcat-vscode",
-  "description": "tampermonkey,userscript,scriptcat辅助开发扩展",
+  "displayName": "%display-name%",
+  "description": "%extension-description%",
   "repository": "https://github.com/scriptscat/scriptcat-vscode",
   "version": "0.5.0",
   "publisher": "CodFrm",
@@ -16,6 +16,8 @@
   "engines": {
     "vscode": "^1.90.0"
   },
+  "l10n": "./l10n",
+  "nls": "bundle",
   "categories": [
     "Debuggers",
     "Programming Languages"
@@ -51,15 +53,15 @@
     "commands": [
       {
         "command": "scriptcat.target",
-        "title": "指定同步脚本路径"
+        "title": "%scriptcat-target%"
       },
       {
         "command": "scriptcat.autoTarget",
-        "title": "切换到自动识别模式"
+        "title": "%scriptcat-auto-target%"
       },
       {
         "command": "scriptcat.debug",
-        "title": "ScriptCat调试信息"
+        "title": "%scriptcat-debug%"
       }
     ]
   },
@@ -72,7 +74,8 @@
     "watch-tests": "tsc -p -w . --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "export-i18n": "vscode-l10n-dev export --outDir ./l10n ./src"
   },
   "devDependencies": {
     "@rspack/cli": "^1.7.5",
@@ -83,6 +86,7 @@
     "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "@vscode/l10n-dev": "^0.0.35",
     "@vscode/test-electron": "^2.3.0",
     "eslint": "^8.50.0",
     "fast-glob": "^3.3.3",
@@ -90,7 +94,8 @@
     "typescript": "^5.3.0"
   },
   "dependencies": {
-   "@vscode/debugadapter": "^1.68.0",
+    "@vscode/l10n": "^0.0.18",
+    "@vscode/debugadapter": "^1.68.0",
     "ws": "^8.18.3"
   }
 }
