@@ -3,7 +3,7 @@
   "displayName": "%display-name%",
   "description": "%extension-description%",
   "repository": "https://github.com/scriptscat/scriptcat-vscode",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publisher": "CodFrm",
   "icon": "icons/logo.png",
   "packageManager": "pnpm@10.29.2",
