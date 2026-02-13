@@ -74,7 +74,8 @@
     "watch-tests": "tsc -p -w . --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "export-i18n": "vscode-l10n-dev export --outDir ./l10n ./src"
   },
   "devDependencies": {
     "@rspack/cli": "^1.7.5",

@@ -44,11 +44,11 @@ export class Synchronizer {
       
       if (this.isWebSocketOwner) {
         vscode.window.showInformationMessage(
-          vscode.l10n.t("scriptcat-ws-started-owner", port.toString())
+          vscode.l10n.t("ScriptCat WebSocket service started on port {0} (Main Window)", port.toString())
         );
       } else {
         vscode.window.showInformationMessage(
-          vscode.l10n.t("scriptcat-ws-started-secondary")
+          vscode.l10n.t("ScriptCat WebSocket service is running in another window, current window will use file communication mode (Secondary Window)")
         );
       }
       
@@ -58,11 +58,11 @@ export class Synchronizer {
         // 端口被占用，说明其他窗口已经启动了WebSocket服务器
         this.isWebSocketOwner = false;
         vscode.window.showInformationMessage(
-          vscode.l10n.t("scriptcat-ws-started-secondary")
+          vscode.l10n.t("ScriptCat WebSocket service is running in another window, current window will use file communication mode (Secondary Window)")
         );
       } else {
         vscode.window.showErrorMessage(
-          vscode.l10n.t("scriptcat-file-communication-error", error.message)
+          vscode.l10n.t("File communication failed: {0}", error.message)
         );
       }
     }
@@ -115,7 +115,7 @@ export class Synchronizer {
       }, 5000);
     } catch (error) {
       console.warn('无法通过文件发送消息:', error);
-      vscode.window.showWarningMessage(vscode.l10n.t("scriptcat-file-communication-error", String(error)));
+      vscode.window.showWarningMessage(vscode.l10n.t("File communication failed: {0}", String(error)));
     }
   }
 
@@ -128,11 +128,11 @@ export class Synchronizer {
       }
       vscode.window
         .showInformationMessage(
-          vscode.l10n.t("scriptcat-file-synced", ev.path),
-          vscode.l10n.t("scriptcat-file-synced-skip")
+          vscode.l10n.t("{0} changes have been synced", ev.path),
+          vscode.l10n.t("Don't show again for this file")
         )
         .then((result) => {
-          if (result === vscode.l10n.t("scriptcat-file-synced-skip")) {
+          if (result === vscode.l10n.t("Don't show again for this file")) {
             this.context.workspaceState.update("ignore_msg_" + ev.path, true);
           }
         });

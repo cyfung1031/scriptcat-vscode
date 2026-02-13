@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
   // 如果事先在当前工作区指定过目标脚本，则不再扫描目录下是否存在符合约定的脚本
   if (config && existsSync(config)) {
     vscode.window.showInformationMessage(
-      vscode.l10n.t("scriptcat-workspace-selected", config, signatureFileCommand)
+      vscode.l10n.t("Workspace has selected script: {0}, use command {1} to change", config, signatureFileCommand)
     );
     watcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(config, "*"),
@@ -57,17 +57,17 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(signatureFileCommand, () => {
       const options: vscode.OpenDialogOptions = {
         canSelectMany: false,
-        title: vscode.l10n.t("scriptcat-select-debug-script"),
-        openLabel: vscode.l10n.t("scriptcat-select-script"),
+        title: vscode.l10n.t("Select debug script"),
+        openLabel: vscode.l10n.t("Select script"),
         filters: {
-          [vscode.l10n.t("scriptcat-user-script")]: ["js"],
+          [vscode.l10n.t("User script")]: ["js"],
         },
       };
       vscode.window.showOpenDialog(options).then((filePath) => {
         if (filePath) {
           const scriptPath = filePath[0].fsPath;
           context.workspaceState.update("target", scriptPath);
-          vscode.window.showInformationMessage(vscode.l10n.t("scriptcat-script-selected", scriptPath));
+          vscode.window.showInformationMessage(vscode.l10n.t("Script selected: {0}", scriptPath));
           mSync.changeTargetScript(
             vscode.workspace.createFileSystemWatcher(
               new vscode.RelativePattern(scriptPath, "*")
@@ -90,7 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
       
       mSync.changeTargetScript(autoWatcher);
       
-      vscode.window.showInformationMessage(vscode.l10n.t("scriptcat-auto-mode-enabled"));
+      vscode.window.showInformationMessage(vscode.l10n.t("Switched to auto-detect mode, will monitor all *.user.js files"));
     }),
     vscode.languages.registerDocumentFormattingEditProvider(["javascript"], {
       provideDocumentFormattingEdits(
@@ -105,10 +105,10 @@ export function activate(context: vscode.ExtensionContext) {
     }),
     vscode.commands.registerCommand('scriptcat.debug', () => {
       const debugInfo = mSync.getDebugInfo();
-      const windowRole = debugInfo.isWebSocketOwner ? vscode.l10n.t("scriptcat-main-window") : vscode.l10n.t("scriptcat-secondary-window");
-      const wsStatus = debugInfo.wsManagerRunning ? vscode.l10n.t("scriptcat-ws-running") : vscode.l10n.t("scriptcat-ws-stopped");
+      const windowRole = debugInfo.isWebSocketOwner ? vscode.l10n.t("Main Window") : vscode.l10n.t("Secondary Window");
+      const wsStatus = debugInfo.wsManagerRunning ? vscode.l10n.t("Running") : vscode.l10n.t("Stopped");
       const message = vscode.l10n.t(
-        "scriptcat-debug-info",
+        "Debug Information:\nWindow Role: {0}\nWebSocket Status: {1}\nPort: {2}\nShared Directory: {3}\nDirectory Exists: {4}",
         windowRole,
         wsStatus,
         debugInfo.wsManagerPort.toString(),
