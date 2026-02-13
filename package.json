@@ -6,6 +6,7 @@
   "version": "0.5.0",
   "publisher": "CodFrm",
   "icon": "icons/logo.png",
+  "packageManager": "pnpm@10.29.2",
   "keywords": [
     "userscript",
     "Scriptcat",
@@ -13,7 +14,7 @@
     "Greasemonkey"
   ],
   "engines": {
-    "vscode": "^1.61.0"
+    "vscode": "^1.90.0"
   },
   "categories": [
     "Debuggers",
@@ -34,9 +35,16 @@
       {
         "language": "javascript",
         "scopes": {
-          "metadata": ["markup.bold"],
-          "metaKey": ["entity.name.function", "keyword.control"],
-          "metaValue": ["string"]
+          "metadata": [
+            "markup.bold"
+          ],
+          "metaKey": [
+            "entity.name.function",
+            "keyword.control"
+          ],
+          "metaValue": [
+            "string"
+          ]
         }
       }
     ],
@@ -57,9 +65,9 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile": "rspack",
+    "watch": "rspack --watch",
+    "package": "rspack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p -w . --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
@@ -67,24 +75,22 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0",
+    "@rspack/cli": "^1.7.5",
+    "@rspack/core": "^1.7.5",
     "@types/mocha": "^10.0.0",
     "@types/node": "20.x",
-    "@types/vscode": "^1.61.0",
-    "@types/ws": "^8.5.0",
+    "@types/vscode": "^1.90.0",
+    "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vscode/test-electron": "^2.3.0",
     "eslint": "^8.50.0",
-    "glob": "^10.3.0",
+    "fast-glob": "^3.3.3",
     "mocha": "^10.2.0",
-    "ts-loader": "^9.5.0",
-    "typescript": "^5.3.0",
-    "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.0"
+    "typescript": "^5.3.0"
   },
   "dependencies": {
-    "vscode-debugadapter": "^1.49.0",
-    "ws": "^8.2.3"
+   "@vscode/debugadapter": "^1.68.0",
+    "ws": "^8.18.3"
   }
 }
